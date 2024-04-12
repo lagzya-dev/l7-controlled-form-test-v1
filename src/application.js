@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-function sendRequest(form) {
+function sendRequest() {
   axios.post('/users').then((res) => {
     document.body.innerHTML = `<p>${res.data.message}</p>`;
   });
@@ -66,6 +66,6 @@ export default () => {
   };
   submit.onclick = (e) => {
     e.preventDefault();
-    sendRequest(null);
+    sendRequest();
   };
 };
