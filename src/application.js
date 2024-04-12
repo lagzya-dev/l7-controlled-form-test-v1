@@ -7,59 +7,44 @@ function sendRequest() {
 }
 export default () => {
   const formContainer = document.querySelector('.form-container');
-  const form = document.createElement('form');
-  form.id = 'registrationForm';
-  const divName = document.createElement('div');
-  divName.className = 'form-group';
-  const lableName = document.createElement('lable');
-  lableName.setAttribute('for', 'inputName');
-  lableName.textContent = 'Name';
-  const inputName = document.createElement('input');
-  inputName.type = 'text';
-  inputName.className = 'form-control';
-  inputName.id = 'inputName';
-  inputName.placeholder = 'Введите ваше имя';
-  inputName.name = 'name';
-  inputName.required = true;
-  divName.appendChild(lableName);
-  divName.appendChild(inputName);
-  form.appendChild(divName);
-  const divEmail = document.createElement('div');
-  divEmail.className = 'form-group';
-
-  const lableEmail = document.createElement('lable');
-  lableName.setAttribute('for', 'inputEmail');
-  lableEmail.textContent = 'Email';
-  const inputEmail = document.createElement('input');
-  inputEmail.type = 'text';
-  inputEmail.className = 'form-control';
-  inputEmail.id = 'inputEmail';
-  inputEmail.placeholder = 'Введите email';
-  inputEmail.name = 'email';
-  inputEmail.required = true;
-
-  divEmail.appendChild(lableEmail);
-  divEmail.appendChild(inputEmail);
-  form.appendChild(divEmail);
-  const submit = document.createElement('input');
-  submit.type = 'submit';
-  submit.value = 'Submit';
-  submit.className = 'btn btn-primary';
-  submit.disabled = true;
-  form.appendChild(submit);
-  formContainer.appendChild(form);
-  inputName.onchange = (e) => {
-    inputName.className = inputName.className.replace('is-valid', '').replace('is-invalid', '');
-    const isvalid = e.target.value.replace(' ', '').length > 0;
-    inputName.classList.add(isvalid ? 'is-valid' : 'is-invalid');
+  const formHtml = `<form id="registrationForm">
+  <div class="form-group">
+      <label for="inputName">Name</label>
+      <input type="text" class="form-control" id="inputName" placeholder="Введите ваше имя" name="name" required>
+  </div>
+  <div class="form-group">
+      <label for="inputEmail">Email</label>
+      <input type="text" class="form-control" id="inputEmail" placeholder="Введите email" name="email" required>
+  </div>
+  <input type="submit" value="Submit" class="btn btn-primary" disabled>
+</form>`;
+  formContainer.innerHTML = formHtml;
+  const inputName = document.querySelector('#inputName');
+  const inputEmail = document.querySelector('#inputEmail');
+  const submit = document.querySelector('input[type="submit"]');
+  inputName.oninput = (e) => {
+    e.preventDefault();
+    const isvalid = e.target.value.trim().length > 0;
+    if (isvalid) {
+      inputName.classList.remove('is-invalid');
+      inputName.classList.add('is-valid');
+    } else {
+      inputName.classList.remove('is-valid');
+      inputName.classList.add('is-invalid');
+    }
     submit.disabled = !(
       inputName.className.includes('is-valid') && inputEmail.className.includes('is-valid')
     );
   };
-  inputEmail.onchange = (e) => {
-    inputEmail.className = inputName.className.replace('is-valid', '').replace('is-invalid', '');
+  inputEmail.oninput = (e) => {
     const isvalid = !e.target.value.includes(' ') && e.target.value.split('@').length === 2;
-    inputEmail.classList.add(isvalid ? 'is-valid' : 'is-invalid');
+    if (isvalid) {
+      inputEmail.classList.remove('is-invalid');
+      inputEmail.classList.add('is-valid');
+    } else {
+      inputEmail.classList.remove('is-valid');
+      inputEmail.classList.add('is-invalid');
+    }
     submit.disabled = !(
       inputName.className.includes('is-valid') && inputEmail.className.includes('is-valid')
     );

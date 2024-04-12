@@ -27,17 +27,18 @@ beforeEach(() => {
 
 test('step1', async () => {
   const formContainer = document.querySelector('.form-container');
-  expect(formContainer.querySelector('form')
-    .querySelector('.form-group')
-    .querySelector('input[class="form-control"]')).not.toEqual(null);
+  expect(
+    formContainer
+      .querySelector('form')
+      .querySelector('.form-group')
+      .querySelector('input[class="form-control"]'),
+  ).not.toEqual(null);
 });
 
 test('step2', async () => {
-  let scope = nock('http://localhost')
-    .post('/users')
-    .reply(200, {
-      message: 'user has been created sucessfully'
-    });
+  let scope = nock('http://localhost').post('/users').reply(200, {
+    message: 'user has been created sucessfully',
+  });
 
   await userEvent.clear(elements.nameInput);
   await userEvent.clear(elements.emailInput);
@@ -46,9 +47,9 @@ test('step2', async () => {
 
   await userEvent.click(elements.submit);
   await waitFor(() => {
-    expect(document.body).not.toHaveClass('container')
+    expect(document.body).not.toHaveClass('container');
     const p = document.querySelector('p');
-    expect(p).toHaveTextContent('user has been created sucessfully')
+    expect(p).toHaveTextContent('user has been created sucessfully');
   });
 
   // для сохранения количества тестов равного 5, мне пришлось снова проинициализировать приложение
@@ -63,11 +64,9 @@ test('step2', async () => {
     emailInput: screen.getByRole('textbox', { name: /Email/ }),
   };
 
-  scope = nock('http://localhost')
-    .post('/users')
-    .reply(200, {
-      message: 'there is no spoon'
-    });
+  scope = nock('http://localhost').post('/users').reply(200, {
+    message: 'there is no spoon',
+  });
 
   await userEvent.clear(elements.nameInput);
   await userEvent.clear(elements.emailInput);
@@ -77,7 +76,7 @@ test('step2', async () => {
   await userEvent.click(elements.submit);
   await waitFor(() => {
     const p = document.querySelector('p');
-    expect(p).toHaveTextContent('there is no spoon')
+    expect(p).toHaveTextContent('there is no spoon');
   });
 
   scope.done();
@@ -94,7 +93,7 @@ test('step3', async () => {
   expect(elements.emailInput).not.toHaveClass('is-valid');
 
   await userEvent.clear(elements.nameInput);
-  await userEvent.clear(elements.emailInput); 
+  await userEvent.clear(elements.emailInput);
   await userEvent.type(elements.nameInput, '  ');
   await userEvent.type(elements.emailInput, 'email@s');
   expect(elements.nameInput).toHaveClass('is-invalid');
@@ -122,10 +121,3 @@ test('step4', async () => {
   await userEvent.type(elements.emailInput, 'w@s');
   expect(elements.submit).not.toBeDisabled();
 });
-
-
-
-
-
-
-
