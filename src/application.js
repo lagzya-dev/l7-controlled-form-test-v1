@@ -12,7 +12,7 @@ export default () => {
   const divName = document.createElement('div');
   divName.className = 'form-group';
   const lableName = document.createElement('lable');
-  lableName.for = 'inputName';
+  lableName.setAttribute('for', 'inputName');
   lableName.textContent = 'Name';
   const inputName = document.createElement('input');
   inputName.type = 'text';
@@ -28,7 +28,7 @@ export default () => {
   divEmail.className = 'form-group';
 
   const lableEmail = document.createElement('lable');
-  lableEmail.for = 'inputEmail';
+  lableName.setAttribute('for', 'inputEmail');
   lableEmail.textContent = 'Email';
   const inputEmail = document.createElement('input');
   inputEmail.type = 'text';
